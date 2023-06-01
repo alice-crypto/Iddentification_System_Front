@@ -31,6 +31,10 @@ import Maps from "../../pages/maps";
 import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
+import CreateCard from "../../pages/createCard";
+import ListAvis from "../../pages/listAvis";
+import ListCard from "../../pages/listCard";
+import CreateAvis from "../../pages/createAvis";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -65,6 +69,11 @@ function Layout(props) {
               <Route path="/app/ui/maps" component={Maps} />
               <Route path="/app/ui/icons" component={Icons} />
               <Route path="/app/ui/charts" component={Charts} />
+              <Route path="/app/ui/createavis" component={CreateAvis} />
+              <Route path="/app/ui/listavis" component={ListAvis} />
+              <Route path="/app/ui/listcard" component={ListCard} />
+              <Route path="/app/ui/createcard" component={CreateCard} />
+
             </Switch>
             <Box
               mt={5}

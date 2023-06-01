@@ -1,4 +1,7 @@
 import React from "react";
+import axios from "axios";
+import { Height } from "@material-ui/icons";
+
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -45,7 +48,7 @@ function useUserDispatch() {
   return context;
 }
 
-export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
+export { UserProvider, useUserState, useUserDispatch, loginUser, signOut, newAvis };
 
 // ###########################################################
 
@@ -54,14 +57,31 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setIsLoading(true);
 
   if (!!login && !!password) {
-    setTimeout(() => {
-      localStorage.setItem('id_token', 1)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
-
-      history.push('/app/dashboard')
-    }, 2000);
+    const newLogin ={
+      email:login,
+      password:password
+    }
+    axios.post("http://localhost:8000/router/Auth/login/", newLogin)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        const token = response.data.token;
+        const refreshToken = response.data.refreshToken;
+        console.log('Token:', token);
+        console.log('Refresh Token:', refreshToken);
+        setTimeout(() => {
+          localStorage.setItem('id_token', token)
+          setError(null)
+          setIsLoading(false)
+          dispatch({ type: 'LOGIN_SUCCESS' })
+          history.push('/app/dashboard')
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
   } else {
     dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
@@ -74,3 +94,55 @@ function signOut(dispatch, history) {
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }
+
+function newAvis(dispatch, givenname,
+  surname,
+  dateofbirth,
+  placeofbirth,
+  genre,
+  height,
+  photo,
+  reward,
+  selectedOption,
+  history,
+  setIsLoading, setError) {
+  setError(false);
+  setIsLoading(true);
+  const today = new Date();
+  if (!!givenname && !!surname) {
+    const newLogin ={
+      given_name: givenname,
+      surname: surname,
+      date_of_birth: dateofbirth,
+      gender: genre,
+      Height: height,
+      PostedDate: "2023-08-10",
+      reward: reward,
+      ClosingDate: "2023-12-11",
+      isActive: true,
+      place_of_birth: placeofbirth,
+      fk_commissariat: selectedOption
+    }
+    axios.post("http://localhost:8000/router/wanted-poster/", newLogin)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        setTimeout(() => {
+          setError(null)
+          setIsLoading(false)
+          dispatch({ type: 'POST_SUCCESS' })
+          history.push("/app/dashboard")
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
+  } else {
+    dispatch({ type: "POST_FAILURE" });
+    setError(true);
+    setIsLoading(false);
+  }
+}
+

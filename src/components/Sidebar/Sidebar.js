@@ -5,10 +5,10 @@ import {
   NotificationsNone as NotificationsIcon,
   FormatSize as TypographyIcon,
   FilterNone as UIElementsIcon,
+  AccountBox as AdministrationIcon,
+  CreditCard as IdentityCartIcon,
+  Search as AvisIcon,
   BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
   ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
@@ -20,7 +20,6 @@ import useStyles from "./styles";
 
 // components
 import SidebarLink from "./components/SidebarLink/SidebarLink";
-import Dot from "./components/Dot";
 
 // context
 import {
@@ -46,34 +45,33 @@ const structure = [
   },
   {
     id: 4,
-    label: "UI Elements",
+    label: "Administration",
     link: "/app/ui",
-    icon: <UIElementsIcon />,
+    icon: <AdministrationIcon />,
     children: [
-      { label: "Icons", link: "/app/ui/icons" },
-      { label: "Charts", link: "/app/ui/charts" },
-      { label: "Maps", link: "/app/ui/maps" },
+      { label: "New User", link: "/app/ui/icons" },
+      { label: "All Users", link: "/app/ui/charts" },
     ],
   },
-  { id: 5, type: "divider" },
-  { id: 11, type: "title", label: "PROJECTS" },
   {
-    id: 12,
-    label: "My recent",
-    link: "",
-    icon: <Dot size="small" color="warning" />,
+    id: 5,
+    label: "Cartes d'identités",
+    link: "/app/ui",
+    icon: <IdentityCartIcon />,
+    children: [
+      { label: "Post New Card", link: "/app/ui/createCard" },
+      { label: "List All Card", link: "/app/ui/listCard" },
+    ],
   },
   {
-    id: 13,
-    label: "Starred",
-    link: "",
-    icon: <Dot size="small" color="primary" />,
-  },
-  {
-    id: 14,
-    label: "Background",
-    link: "",
-    icon: <Dot size="small" color="secondary" />,
+    id: 6,
+    label: "Avis de recherches",
+    link: "/app/ui",
+    icon: <AvisIcon />,
+    children: [
+      { label: "Create Avis", link: "/app/ui/createAvis" },
+      { label: "List Avis", link: "/app/ui/listAvis" },
+    ],
   },
   { id: 15, type: "divider" },
   { id: 16, type: "title", label: "REPORTING" },
@@ -117,6 +115,17 @@ const structure = [
       { label: "List", link: "/app/ui/charts" },
     ],
   },
+  {
+    id: 20,
+    label: "Commissariat",
+    link: "/app/ui",
+    icon: <UIElementsIcon />,
+    children: [
+      { label: "Create", link: "/app/ui/icons" },
+      { label: "List", link: "/app/ui/charts" },
+    ],
+  },
+
 
   
 ];

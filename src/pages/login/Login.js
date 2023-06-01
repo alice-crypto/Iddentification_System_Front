@@ -9,15 +9,13 @@ import {
   TextField,
   Fade,
 } from "@material-ui/core";
-import { withRouter, useHistory } from "react-router-dom";
-import classnames from "classnames";
+import { withRouter } from "react-router-dom";
 
 // styles
 import useStyles from "./styles";
 
 // logo
 import logo from "./logo.svg";
-import google from "../../images/google.svg";
 
 // context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
@@ -27,31 +25,6 @@ function Login(props) {
   const [login, setLogin] = useState([]);
   var [loginValue, setLoginValue] = useState("admin@gmail.com");
   var [passwordValue, setPasswordValue] = useState("password");
-  const handleInputChange = event => {
-    const { name, value } = event.target;
-    setNewLogin(prevState => ({ ...prevState, [name]: value }));
-  };
-  const history = useHistory();
-  const handleLogin = event => {
-    event.preventDefault();
-    
-    // axios.post("http://localhost:8000/router/Auth/login/", newLogin)
-    //   .then(response => {
-    //     // Connexion réussie, redirigez vers le tableau de bord (dashboard)
-    //     setLogin(prevState => [...prevState, response.data]);
-    //     setNewLogin({ email: "", password: "" });
-    //     const token = response.data.token;
-    //     const refreshToken = response.data.refreshToken;
-    //     console.log('Token:', token);
-    //     console.log('Refresh Token:', refreshToken);
-    //     history.push('/admin/dashboard');
-    //   })
-    //   .catch(error => {
-    //     // Gestion des erreurs
-    //     setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
-    //     console.error(error);
-    //   });
-  };
   var classes = useStyles();
 
   // global
@@ -61,7 +34,6 @@ function Login(props) {
   var [isLoading, setIsLoading] = useState(false);
   var [error, setError] = useState(null);
   var [activeTabId, setActiveTabId] = useState(0);
-  var [nameValue, setNameValue] = useState("");
 
   return (
     <Grid container className={classes.container}>
@@ -95,7 +67,6 @@ function Login(props) {
                   Something is wrong with your login or password :(
                 </Typography>
               </Fade>
-              <form onSubmit={handleLogin}>
                 <TextField
                   id="email"
                   InputProps={{
@@ -160,7 +131,6 @@ function Login(props) {
                     Forget Password
                   </Button>
                 </div>
-              </form>
             </React.Fragment>
           )}
         </div>
