@@ -72,17 +72,19 @@ export default function CreateAvis(props) {
   const history = useHistory();
   var newfile;
   const handleFileChange = (e) => {
-    setPhoto(e.target.files[0]);
+    const fichier = e.target.files[0];
+    setPhoto(fichier);
     const reader = new FileReader();
     reader.onload = (event) => {
         // Accéder au contenu du fichier ici
         const fileContent = event.target.result;
-        const byteArray = new Uint8Array(fileContent)
-        console.log('Contenu du fichier :', fileContent);
+        const base64Content = btoa(fileContent)
+
+        console.log('Contenu du fichier :', base64Content);
 
         // Faites ce que vous voulez avec le contenu du fichier
     };
-    photo = reader.readAsArrayBuffer(photo);
+    reader.readAsBinaryString(fichier);
   };
 
   // global
@@ -117,14 +119,6 @@ export default function CreateAvis(props) {
           </Tabs>
           {activeTabId === 0 && (
             <React.Fragment>
-                <Typography variant="h1" className={classes.greeting}>
-                Good Morning, User
-              </Typography>
-              <div className={classes.formDividerContainer}>
-                <div className={classes.formDivider} />
-                <Typography className={classes.formDividerWord}>or</Typography>
-                <div className={classes.formDivider} />
-              </div>
               <Fade in={error}>
                 <Typography color="secondary" className={classes.errorMessage}>
                   Something is wrong with your login or password :(
@@ -166,21 +160,24 @@ export default function CreateAvis(props) {
                       disabled={
                         givenname.length === 0||reward.length === 0 ||selectedOption.length === 0
                       }
-                      onClick={() =>
+                      onClick={()  => {
+                    
                         newAvis(
-                          givenname,
-                          surname,
-                          dateofbirth,
-                          placeofbirth,
-                          genre,
-                          height,
-                          newfile,
-                          reward,
-                          selectedOption,
-                          props.history,
-                          setIsLoading,
-                          setError,
-                        )
+                            givenname,
+                            surname,
+                            dateofbirth,
+                            placeofbirth,
+                            genre,
+                            height,
+                            photo,
+                            reward,
+                            selectedOption,
+                            props.history,
+                            setIsLoading,
+                            setError,
+                          )
+                      }
+                
                       }
                       variant="contained"
                       color="primary"

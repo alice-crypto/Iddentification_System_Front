@@ -21,8 +21,6 @@ import logo from "./logo.svg";
 import { useUserDispatch, loginUser } from "../../context/UserContext";
 
 function Login(props) {
-  const [newLogin, setNewLogin] = useState({email: "", password: ""});
-  const [login, setLogin] = useState([]);
   var [loginValue, setLoginValue] = useState("admin@gmail.com");
   var [passwordValue, setPasswordValue] = useState("password");
   var classes = useStyles();

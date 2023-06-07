@@ -77,11 +77,11 @@ const structure = [
   { id: 16, type: "title", label: "REPORTING" },
   {
     id: 17,
-    label: "Region",
+    label: "Reporting",
     link: "/app/ui",
     icon: <UIElementsIcon />,
     children: [
-      { label: "Create", link: "/app/ui/icons" },
+      { label: "Create", link: "/app/ui/CreateReporting" },
       { label: "List", link: "/app/ui/charts" },
     ],
   },
