@@ -1,0 +1,7 @@
+{
+    "name": "CreateUser",
+    "version": "1.0.0",
+    "private": true,
+    "main": "CreateUser.js"
+}
+  

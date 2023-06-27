@@ -36,6 +36,9 @@ import ListAvis from "../../pages/listAvis";
 import ListCard from "../../pages/listCard";
 import CreateAvis from "../../pages/createAvis";
 import CreateReporting from "../../pages/CreateReporting";
+import SeeAvis from "../../pages/SeeAvis";
+import ListUser from "../../pages/listUser";
+import CreateUser from "../../pages/createUser";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -49,7 +52,7 @@ function Layout(props) {
   return (
     <div className={classes.root}>
         <>
-          <Header history={props.history} />
+          <Header history={props.history}/>
           <Sidebar />
           <div
             className={classnames(classes.content, {
@@ -61,6 +64,7 @@ function Layout(props) {
               <Route path="/app/dashboard" component={Dashboard} />
               <Route path="/app/typography" component={Typography} />
               <Route path="/app/tables" component={Tables} />
+
               <Route path="/app/notifications" component={Notifications} />
               <Route
                 exact
@@ -70,12 +74,14 @@ function Layout(props) {
               <Route path="/app/ui/maps" component={Maps} />
               <Route path="/app/ui/icons" component={Icons} />
               <Route path="/app/ui/charts" component={Charts} />
-              <Route path="/app/ui/CreateReporting" component={CreateReporting} />
-              <Route path="/app/ui/createavis" component={CreateAvis} />
-              <Route path="/app/ui/listavis" component={ListAvis} />
-              <Route path="/app/ui/listcard" component={ListCard} />
-              <Route path="/app/ui/createcard" component={CreateCard} />
-              
+              <Route path="/app/reporting/CreateReporting" component={CreateReporting} />
+              <Route path="/app/avis/createavis" component={CreateAvis} />
+              <Route path="/app/avis/listavis" component={ListAvis} />
+              <Route path="/app/card/listcard" component={ListCard} />
+              <Route path="/app/card/createcard" component={CreateCard} />
+              <Route path="/app/avis/seeavis" component={SeeAvis}/>
+              <Route path="/app/user/listuser" component={ListUser}/>
+              <Route path="/app/user/createuser" component={CreateUser}/>
 
 
             </Switch>

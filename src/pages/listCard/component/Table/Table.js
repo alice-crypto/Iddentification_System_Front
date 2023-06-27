@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Table,
   TableRow,
@@ -11,26 +10,28 @@ import {
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
 import useStyles from "../../styles";
-import { See } from "./ListAvisContext";
+import {See} from "./ListCardContext";
+import axios from "axios";
+
 
 const states = {
   sent: "success",
   pending: "warning",
   declined: "secondary",
 };
-export default function TableComponent({ data, deleteAvis, props}) {
-  const classes = useStyles();  
+export default function TableComponent({ data , deleteCard, props }) {
+  const classes = useStyles();
   var keys = Object.keys(data && data[0]).map(i => i.toUpperCase());
   keys.shift(); // delete "id" key
   const [tableValue, setTableValue] = useState(data);
   //delete
   const handleDelete = (id) => {
-    deleteAvis(id);
+    deleteCard(id);
     setTableValue(tableValue.filter(item => item.id !== id));
   };
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/router/wanted-poster/');
+      const response = await axios.get('http://127.0.0.1:8000/router/identity-cards/');
       setTableValue(response.data);
     } catch (error) {
       console.error('Erreur lors du chargement des données :', error);
@@ -63,12 +64,18 @@ export default function TableComponent({ data, deleteAvis, props}) {
             REWARD
           </TableCell>
           <TableCell>
+            Poster Phone number
+          </TableCell>
+          <TableCell>
+            Identity number
+          </TableCell>
+          <TableCell>
             ACTION
           </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {tableValue && tableValue.map(({ id, given_name, surname, date_of_birth, gender,Height, reward }) => (
+        {tableValue && tableValue.map(({ id, given_name, surname, date_of_birth, gender,Height, reward, posted_phone_number, identity_number}) => (
           <TableRow key={id}>
             <TableCell className="pl-3 fw-normal">{given_name}</TableCell>
             <TableCell>{surname}</TableCell>
@@ -76,12 +83,13 @@ export default function TableComponent({ data, deleteAvis, props}) {
             <TableCell>{gender}</TableCell>
             <TableCell>{Height}</TableCell>
             <TableCell>{reward}</TableCell>
+            <TableCell>{posted_phone_number}</TableCell>
+            <TableCell>{identity_number}</TableCell>
             <TableCell>
               <Button className={classes.success} onClick={() => See(id, props.history)}><Icons.RemoveRedEyeSharp/></Button>{" "}
               <Button className={classes.warning}><Icons.Update/></Button>{" "} 
-              <Button id="delete-button" className={classes.secondary} 
-                onClick={() =>handleDelete(id)}><Icons.Delete/>
-              </Button>
+              <Button className={classes.secondary} 
+                onClick={() =>handleDelete(id)}><Icons.Delete/></Button>
             </TableCell>
           </TableRow>
         ))}

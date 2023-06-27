@@ -101,6 +101,8 @@ export default function CreateAvis(props) {
       variant="contained"
       size="medium"
       color="secondary"
+      onClick={() => props.history.push("/app/avis/listavis")}
+
     >
         voir la liste
     </Button>} />

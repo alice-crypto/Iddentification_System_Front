@@ -88,6 +88,11 @@ const notifications = [
     message: "12 new orders has arrived today",
   },
 ];
+function accueil(history) {
+  //dispatch({ type: "SIGN_OUT_SUCCESS" });
+  //localStorage.removeItem("id_token");
+  history.push("/accueil");
+}
 
 export default function Header(props) {
   var classes = useStyles();
@@ -96,7 +101,7 @@ export default function Header(props) {
   var layoutState = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
   var userDispatch = useUserDispatch();
-
+  
   // local
   var [mailMenu, setMailMenu] = useState(null);
   var [isMailsUnread, setIsMailsUnread] = useState(true);
@@ -106,7 +111,7 @@ export default function Header(props) {
   var [isSearchOpen, setSearchOpen] = useState(false);
 
   return (
-    <AppBar position="fixed" className={classes.appBar}>
+    <AppBar position="fixed" className={classes.appBar} style={{background: "#009160"}}>
       <Toolbar className={classes.toolbar}>
         <IconButton
           color="inherit"
@@ -179,21 +184,12 @@ export default function Header(props) {
           </Badge>
         </IconButton>
         <IconButton
-          color="inherit"
-          aria-haspopup="true"
-          aria-controls="mail-menu"
-          onClick={e => {
-            setMailMenu(e.currentTarget);
-            setIsMailsUnread(false);
-          }}
-          className={classes.headerMenuButton}
-        >
-          <Badge
-            badgeContent={isMailsUnread ? messages.length : null}
-            color="secondary"
-          >
-            <MailIcon classes={{ root: classes.headerIcon }} />
-          </Badge>
+        aria-haspopup="true"
+        color="inherit"
+        className={classes.headerMenuButton}>
+            <Typography variant="h6" weight="medium" onClick={() => accueil(props.history)}>
+              Acceuil
+            </Typography>
         </IconButton>
         <IconButton
           aria-haspopup="true"
@@ -204,61 +200,6 @@ export default function Header(props) {
         >
           <AccountIcon classes={{ root: classes.headerIcon }} />
         </IconButton>
-        <Menu
-          id="mail-menu"
-          open={Boolean(mailMenu)}
-          anchorEl={mailMenu}
-          onClose={() => setMailMenu(null)}
-          MenuListProps={{ className: classes.headerMenuList }}
-          className={classes.headerMenu}
-          classes={{ paper: classes.profileMenu }}
-          disableAutoFocusItem
-        >
-          <div className={classes.profileMenuUser}>
-            <Typography variant="h4" weight="medium">
-              New Messages
-            </Typography>
-            <Typography
-              className={classes.profileMenuLink}
-              component="a"
-              color="secondary"
-            >
-              {messages.length} New Messages
-            </Typography>
-          </div>
-          {messages.map(message => (
-            <MenuItem key={message.id} className={classes.messageNotification}>
-              <div className={classes.messageNotificationSide}>
-                <UserAvatar color={message.variant} name={message.name} />
-                <Typography size="sm" color="text" colorBrightness="secondary">
-                  {message.time}
-                </Typography>
-              </div>
-              <div
-                className={classNames(
-                  classes.messageNotificationSide,
-                  classes.messageNotificationBodySide,
-                )}
-              >
-                <Typography weight="medium" gutterBottom>
-                  {message.name}
-                </Typography>
-                <Typography color="text" colorBrightness="secondary">
-                  {message.message}
-                </Typography>
-              </div>
-            </MenuItem>
-          ))}
-          <Fab
-            variant="extended"
-            color="primary"
-            aria-label="Add"
-            className={classes.sendMessageButton}
-          >
-            Send New Message
-            <SendIcon className={classes.sendButtonIcon} />
-          </Fab>
-        </Menu>
         <Menu
           id="notifications-menu"
           open={Boolean(notificationsMenu)}
