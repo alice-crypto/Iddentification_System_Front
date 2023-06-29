@@ -18,39 +18,38 @@ import {
   Link,
   Modal,
   Dialog,
+  Chip,
+  OutlinedInput,
+  Fade,
+  Select,  
+  MenuItem,
+  Input,
+  CircularProgress,  
   DialogActions,
   DialogTitle,
   DialogContent,
-  OutlinedInput,
-  Chip,
-  Fade,
-  Select,
-  Input,
-  MenuItem,
-  CircularProgress,
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
-import Imagess from "./image/luffy.jpg"
 import CameraIcon from "@material-ui/icons/PhotoCamera"
 import useStyles from "./styles";
 import logo from "./logo.svg";
-import { withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import {newfrontCard } from "../../context/AvisContext";
-import { useHistory } from "react-router-dom";
 //import {Stack} from "@material-ui/core/"
 //import {createTheme, ThemeProvider} from '@material-ui/styles'
 import {createTheme, ThemeProvider} from '@material-ui/core/styles'
 
+
 const style = {
-    position : 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-    padding: 16, // Ombre floue avec une composante alpha
+  position : 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
 };
 function loginUser(history){
     history.push("/login");
@@ -84,6 +83,7 @@ function Actif(isActive){
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
+
 function Album(props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -196,7 +196,6 @@ function Album(props) {
       useEffect(() => {
         fetchData();
       }, []);
-  var classes = useStyles();
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -318,8 +317,7 @@ function Album(props) {
                 </form>
               </Grid>
             </Grid>
-          </div>
-          
+          </div>          
         </Toolbar>
       </AppBar>
       <main>
@@ -357,7 +355,6 @@ function Album(props) {
               </Grid>
             </Grid><br/>
           </Container>
-
 
         </Box>
         </div><br/><br/>
@@ -401,10 +398,12 @@ function Album(props) {
                     <Button size="small" className={classes.warning}><Icons.Update/></Button>
                   </CardActions>
                 </Card>
-                <Dialog
+                <Modal
                 open={open}
-                onClose={handleClose}>
-                    <DialogContent>
+                onClose={handleClose}
+                aria-labelledby="parent-modal-title"
+                aria-describedby="parent-modal-description">
+                    <Box sx={{...style, width:400}}>
                             <h2>Avis de recherche</h2>
                             <p>
                                 <img src={photos} width='100%' height='200'/>
@@ -433,10 +432,9 @@ function Album(props) {
                                     Si vous avez des informations, contactez nous au 6XX.XX.XX.XX.
                                 </Typography>                     
                             </p>
-                    </DialogContent>
-                </Dialog>
+                    </Box>
+                </Modal>
               </Grid>
-              
             )
             )
             }

@@ -18,18 +18,21 @@ import {
   Link,
   Modal,
   Dialog,
-  Chip
+  Chip,
+  OutlinedInput,
+  Fade,
+  Select,
+  MenuItem,
+  Input,
+  CircularProgress,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
-import Imagess from "./image/luffy.jpg"
-import CameraIcon from "@material-ui/icons/PhotoCamera"
 import useStyles from "./styles";
-import logo from "./logo.svg";
-import { withRouter } from "react-router-dom";
-
-
-//import {Stack} from "@material-ui/core/"
-//import {createTheme, ThemeProvider} from '@material-ui/styles'
+import { withRouter, useHistory } from "react-router-dom";
+import {newfrontAvis } from "../../context/AvisContext";
 import {createTheme, ThemeProvider} from '@material-ui/core/styles'
 
 const style = {
@@ -58,7 +61,7 @@ function Copyright() {
     </Typography>
   );
 }
-function genre(genres){
+function genr(genres){
     if(genres=0){
         return("Feminin")
     }else{
@@ -80,7 +83,85 @@ const defaultTheme = createTheme();
 function Album(props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    var [givenname, setGivenNameValue] = useState("");
+    var [surname, setSurenameValue] = useState("");
+    var [dateofbirth, setDateofbirth] = useState("");
+    var [genre, setGenre] = useState("");
+    var [height,setHeight] = useState("");
+    var [photo, setPhoto] = useState(null);
+    var [reward, setReward] = useState("");
+    var [identity_number,setIdentityNumber] = useState("")
+    var [deliverance_date,setDeliveranceDate] = useState("");
+    var [expired_date, setExpiredDate] = useState("");
+    var [phone, setphone] = useState("");
+    const handleOptionChange = (event) => {
+      setGenre(event.target.value);
+    };
 
+    const [place, setPlace_of_birth] = useState([]);
+    useEffect(() => {
+      const fetchData = async () => {
+          try{
+              const response =await axios.get('http://127.0.0.1:8000/router/boroughs/');
+              setPlace_of_birth(response.data);
+          } catch(error) {
+              console.error('Erreur lors du chargement des données :', error)
+          }
+      };
+      fetchData();
+    }, []);
+    var [placeofbirth, setPlaceofbirth] = useState(place.values.id=1);
+    const handlePlaceOfBirthChange = (event) => {
+      setPlaceofbirth(event.target.value);
+    }
+    // comboBox
+    const [options, setOptions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(options.values.id=1);
+    useEffect(() => {
+      // Fonction pour charger les données de la base de données
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/router/authorities/');
+          setOptions(response.data);
+        } catch (error) {
+          console.error('Erreur lors du chargement des données :', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+    const handleSelectOptionChange = (event) => {
+      setSelectedOption(event.target.value);
+    };
+    const history = useHistory();
+    var newfile;
+    const handleFileChange = (e) => {
+    const fichier = e.target.files[0];
+    setPhoto(fichier);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        // Accéder au contenu du fichier ici
+        const fileContent = event.target.result;
+        const base64Content = btoa(fileContent)
+
+        console.log('Contenu du fichier :', base64Content);
+
+        // Faites ce que vous voulez avec le contenu du fichier
+    };
+    reader.readAsBinaryString(fichier);
+  };
+  // local
+  var [isLoading, setIsLoading] = useState(false);
+  var [error, setError] = useState(null);
+  var [activeTabId, setActiveTabId] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openPopup = () => {
+      setIsOpen(true);
+    };
+    const closePopup = () => {
+      setIsOpen(false);
+    };
     const handleSearch = async (event) => {
       event.preventDefault();
       try {
@@ -113,6 +194,112 @@ function Album(props) {
         <Toolbar className={classes.toolbar}>
         {/* <img src={logo} alt="logo" className={classes.logotypeImage} /> */}
         <Button variant="text" color="primary" className={classes.identitybuttton} onClick={()=>{props.history.push("/Icard")}}><Icons.ArrowBackIosSharp/>Voir les cartes d'identités</Button>
+        <Typography variant="h6" align="center" className={classes.listepara} justifyContent="center">
+            Liste des Avis de Recherches
+          </Typography>
+          <div className={classes.addbutton}>            
+            <Grid
+            spacing={2}
+            direction="row"
+            justifyContent="center"
+            container>
+              <Grid item>
+                <Button type="submit" variant="text" className={classes.ajouterbutton} onClick={openPopup}>Ajouter{" "}<Icons.Add/></Button>
+                <Dialog open={isOpen} onClose={closePopup}>
+                  <DialogTitle>
+                    <Button onClick={closePopup} aria-label="close" edge="end" color="inherit"><Icons.Close/></Button>
+                  </DialogTitle>
+                  <DialogContent>
+                    <React.Fragment>
+                    <Fade in={error}>
+                <Typography color="secondary" className={classes.errorMessage}>
+                  Something is wrong with your login or password :(
+                </Typography>
+              </Fade>
+                <OutlinedInput type="text" InputProps={{}} margin="normal" placeholder="Given Name" value={givenname} onChange={e => setGivenNameValue(e.target.value)} fullWidth required/><br/><br/>
+                <OutlinedInput type="text" InputProps={{}} margin="normal" placeholder="Surname" value={surname} onChange={e => setSurenameValue(e.target.value)} fullWidth required/><br/><br/>
+                <OutlinedInput type="date" InputProps={{}} margin="normal" placeholder="Date of birth" value={dateofbirth} onChange={e => setDateofbirth(e.target.value)} fullWidth required/><br/><br/>
+                <Select value={placeofbirth} onChange={handlePlaceOfBirthChange} fullWidth required input={
+                    <OutlinedInput/>
+                  }>
+                     {place.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                        {option.name}
+                    </MenuItem>
+                    ))}
+                </Select> <br/><br/>
+                <Input type="radio" name="genre" value="1" checked={setGenre === '1'} onChange={handleOptionChange}/>
+                <label for="Masculin">Masulin</label><br/><br/>
+                <Input type="radio" name="genre" value="0" checked={setGenre === '0'} onChange={handleOptionChange}/>
+                <label for="Feminin">Feminin</label><br/><br/>
+                <OutlinedInput type="number" InputProps={{}} margin="normal" placeholder="Height" value={height} onChange={e=>setHeight(e.target.value)} fullWidth required/><br/><br/>
+                <OutlinedInput type="file" margin="normal" onChange={handleFileChange} fullWidth required/><br/><br/>
+                <OutlinedInput type="text" InputProps={{}} margin="normal" placeholder="Reward" value={reward} onChange={e => setReward(e.target.value)} fullWidth required/><br/><br/>
+                <Select value={selectedOption} onChange={handleSelectOptionChange} fullWidth required input={
+                    <OutlinedInput/>
+                  }>
+                    {options.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                        {option.name}</MenuItem>
+                    ))}
+                </Select>
+                <br/><br/><br/>
+                <div>
+                  {isLoading ? (
+                    <CircularProgress size={26} />
+                  ) : (
+                    <Button
+                      disabled={
+                        givenname.length === 0||reward.length === 0 ||selectedOption.length === 0
+                      }
+                      onClick={()  => {
+                    
+                        newfrontAvis(
+                            givenname,
+                            surname,
+                            dateofbirth,
+                            placeofbirth,
+                            genre,
+                            height,
+                            photo,
+                            reward,
+                            selectedOption,
+                            props.history,
+                            setIsLoading,
+                            setError,
+                          )
+                      }
+                
+                      }
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      type="submit"
+                    >
+                      Envoyer
+                    </Button>
+                  )}
+                </div>
+                    </React.Fragment>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={closePopup}>Fermer</Button>
+                  </DialogActions>
+                </Dialog>
+              </Grid>
+              <Grid item>
+                <form onSubmit={handleSearch}>
+                  <OutlinedInput
+                    type="text"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    placeholder="Rechercher"
+                  />
+                  <Button type="submit" variant="text" className={classes.searchbutton}><Icons.SearchTwoTone/></Button>
+                </form>
+              </Grid>
+            </Grid>
+          </div>
         </Toolbar>
       </AppBar>
       <main>
@@ -148,25 +335,8 @@ function Album(props) {
             <Grid item>
               <Button variant="contained" className={classes.loginbutton} onClick={()=>props.history.push("/login")}>Login<Icons.ArrowForward/></Button>
               </Grid>
-            </Grid><br/><br/>
-            <Typography variant="h3" align="center" className={classes.para} paragraph>
-                Liste des Avis de recherches
-            </Typography>
-          </Container><br/><br/>
-          <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Rechercher par nom ou prénom"
-            />
-            <button type="submit">Rechercher</button>
-          </form>
-          {searchResults.map((result) => (
-        <div key={result.id}>
-            <p>{result.given_name} {result.surname}</p>
-          </div>
-        ))}
+            </Grid><br/>
+          </Container>
         </Box>
         </div><br/><br/>
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -195,7 +365,7 @@ function Album(props) {
                       <b>Nom:</b> {given_name}{" "}{surname}
                     </Typography>
                     <Typography>
-                      <b>Sexe:</b> {genre(gender)}
+                      <b>Sexe:</b> {genr(gender)}
                     </Typography>
                     <Typography>
                       <b>Taille:</b> {Height} m
@@ -225,7 +395,7 @@ function Album(props) {
                                     <b>Nom:</b> {given_name}{" "}{surname}
                                 </Typography>
                                 <Typography>
-                                    <b>Sexe:</b> {genre(gender)}
+                                    <b>Sexe:</b> {genr(gender)}
                                 </Typography>
                                 <Typography>
                                     <b>Taille:</b> {Height} m
@@ -246,7 +416,6 @@ function Album(props) {
                     </Box>
                 </Modal>
               </Grid>
-              
             )
             )
             }

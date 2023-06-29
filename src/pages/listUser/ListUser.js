@@ -25,7 +25,7 @@ export default function ListUser(props) {
 
   return (
     <>
-    <PageTitle title="Liste de tous les Utilisateurs" button={<Button
+    <PageTitle title="Liste de tous les Administrateurs" button={<Button
       variant="contained"
       size="medium"
       color="secondary"

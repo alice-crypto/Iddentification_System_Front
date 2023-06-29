@@ -27,6 +27,13 @@ export default makeStyles(theme => ({
     },
     color: "white"
   },
+  ajouterbutton:{
+    marginTop: "10%",
+    color: "white"
+  },
+  searchbutton:{
+    color:"white"
+  },
   success: {
     backgroundColor: theme.palette.success.main,
     color: '#fff',
@@ -44,6 +51,9 @@ export default makeStyles(theme => ({
     backgroundColor:"#009160",
     color: "white"
   },
+  addbutton:{
+    marginLeft: "17%"
+  },
   appBar: {
     width: "100vw",
     zIndex: theme.zIndex.drawer + 1,
@@ -58,6 +68,10 @@ export default makeStyles(theme => ({
   },
   para:{
     color:"white",
+  },
+  listepara:{
+    color:"white",
+    marginLeft:"30%"
   },
   paraa:{
     color:"white",
@@ -83,7 +97,6 @@ export default makeStyles(theme => ({
     alignItems: "center",
   },
   logotypeImage: {
-    marginTop: 25,
     width: 50,
     marginBottom: theme.spacing(4),
   },

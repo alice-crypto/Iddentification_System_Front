@@ -81,7 +81,8 @@ export default function TableComponent({ data, deleteAvis, props}) {
               <Button className={classes.warning}><Icons.Update/></Button>{" "} 
               <Button id="delete-button" className={classes.secondary} 
                 onClick={() =>handleDelete(id)}><Icons.Delete/>
-              </Button>
+              </Button>{" "}
+              <Button className={classes.success}><Icons.Check/></Button>{" "} 
             </TableCell>
           </TableRow>
         ))}

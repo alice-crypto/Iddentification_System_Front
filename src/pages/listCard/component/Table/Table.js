@@ -89,7 +89,8 @@ export default function TableComponent({ data , deleteCard, props }) {
               <Button className={classes.success} onClick={() => See(id, props.history)}><Icons.RemoveRedEyeSharp/></Button>{" "}
               <Button className={classes.warning}><Icons.Update/></Button>{" "} 
               <Button className={classes.secondary} 
-                onClick={() =>handleDelete(id)}><Icons.Delete/></Button>
+                onClick={() =>handleDelete(id)}><Icons.Delete/></Button>{" "}
+              <Button className={classes.success}><Icons.Check/></Button>{" "} 
             </TableCell>
           </TableRow>
         ))}
