@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/styles";
-import headImage from "./image/eye.png";
 
 export default makeStyles(theme => ({
   container: {
@@ -13,8 +12,7 @@ export default makeStyles(theme => ({
     left: 0,
   },
   logotypeContainer: {
-    // backgroundColor: theme.palette.secondary.main,
-    backgroundImage: `url(${headImage})`,
+    backgroundColor: theme.palette.primary.main,
     width: "60%",
     height: "100%",
     display: "flex",
@@ -147,4 +145,12 @@ export default makeStyles(theme => ({
       bottom: theme.spacing(2),
     },
   },
+
+  photoImahe: {
+    height: "20rem",
+    width: "20rem"
+  },
+  contentImage: {
+    display: "flex"
+  }
 }));

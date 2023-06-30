@@ -6,14 +6,14 @@ import {Grid, Button} from "@material-ui/core";
 import PageTitle from "../../components/PageTitle";
 //import {Table} from "@material-ui/core";
 import Table from "./component/Table/Table"
-import {deleteAvis} from "./component/Table/ListAvisContext";
+import {deleteUser} from "./component/Table/ListUserContext";
 
-export default function ListAvis(props) {
+export default function ListUser(props) {
     var [tablevalue, setTableValue] = useState("");
     useEffect(() => {
         const fetchData = async () => {
             try{
-                const response =await axios.get('http://127.0.0.1:8000/router/wanted-poster/');
+                const response =await axios.get('http://127.0.0.1:8000/router/Users/register/');
                 setTableValue(response.data);
             } catch(error) {
                 console.error('Erreur lors du chargement des données :', error)
@@ -25,13 +25,13 @@ export default function ListAvis(props) {
 
   return (
     <>
-    <PageTitle title="Liste de tous les Avis de Recherche" button={<Button
+    <PageTitle title="Liste de tous les Administrateurs" button={<Button
       variant="contained"
       size="medium"
       color="secondary"
-      onClick={() => props.history.push("/app/avis/createavis")}
+      onClick={() => props.history.push("/app/user/createuser")}
     >
-        Créer un nouvel Avis
+        Créer un nouvel Utilisateur
     </Button>} />
     <Grid item xs={12}>
           <Widget
@@ -40,7 +40,7 @@ export default function ListAvis(props) {
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
-            <Table data={tablevalue}  deleteAvis={deleteAvis} props={props}/>
+            <Table data={tablevalue}  deleteUser={deleteUser} props={props}/>
           </Widget>
         </Grid>
     </>

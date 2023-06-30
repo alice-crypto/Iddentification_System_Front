@@ -10,16 +10,16 @@ import {
   Select,
   Input,
   OutlinedInput,
-  MenuItem
+  MenuItem, RadioGroup, FormControlLabel, Radio,
 } from "@material-ui/core";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter, useHistory, useLocation } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import Widget from "../../components/Widget";
 import axios from 'axios';
 import useStyles from "./styles";
-import { newAvis } from "../../context/AvisContext";
+import { newAvis, updateAvis } from "../../context/AvisContext";
 
-export default function CreateAvis(props) {
+export default function UpdateAvis(props) {
   var [givenname, setGivenNameValue] = useState("");
   var [surname, setSurenameValue] = useState("");
   var [dateofbirth, setDateofbirth] = useState("");
@@ -30,6 +30,10 @@ export default function CreateAvis(props) {
   const handleOptionChange = (event) => {
     setGenre(event.target.value);
   };
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const [avis, setAvis] = useState(null)
+  const [saveImage, setSaveImage] = useState(null)
 
   const [place, setPlace_of_birth] = useState([]);
   useEffect(() => {
@@ -64,7 +68,25 @@ export default function CreateAvis(props) {
     };
 
     fetchData();
+    loadAvisById()
   }, []);
+
+
+  const loadAvisById = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/router/wanted-poster/'+searchParams.get('id')+'/');
+      setGivenNameValue(response.data.given_name);
+      setSurenameValue(response.data.surname);
+      setDateofbirth(response.data.date_of_birth)
+      setGenre(response.data.gender.toString())
+      setHeight(response.data.Height)
+      setSaveImage(response.data.photos)
+      setReward(response.data.reward)
+      setAvis(response.data)
+    } catch (error) {
+      console.error('Erreur lors du chargement des données :', error);
+    }
+  }
 
   const handleSelectOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -73,6 +95,8 @@ export default function CreateAvis(props) {
   var newfile;
   const handleFileChange = (e) => {
     const fichier = e.target.files[0];
+    setSaveImage(null);
+    console.log('file :', fichier)
     setPhoto(fichier);
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -87,6 +111,7 @@ export default function CreateAvis(props) {
     reader.readAsBinaryString(fichier);
   };
 
+
   // global
   var classes = useStyles();
 
@@ -97,7 +122,7 @@ export default function CreateAvis(props) {
 
   return (
     <>
-    <PageTitle title="Nouvel avis de recherche" button={<Button
+    <PageTitle title="Editer un avis de recherche" button={<Button
       variant="contained"
       size="medium"
       color="secondary"
@@ -138,12 +163,25 @@ export default function CreateAvis(props) {
                     </MenuItem>
                     ))}
                 </Select> <br/><br/>
-                <Input type="radio" name="genre" value="1" checked={setGenre === '1'} onChange={handleOptionChange}/>
-                <label for="Masculin">Masulin</label><br/><br/>
-                <Input type="radio" name="genre" value="0" checked={setGenre === '0'} onChange={handleOptionChange}/>
-                <label for="Feminin">Feminin</label><br/><br/>
+              <RadioGroup
+                aria-label="genre"
+                name="genre"
+                value={genre}
+                onChange={handleOptionChange}
+              >
+                <FormControlLabel value="1" control={<Radio />} label="Masulin" />
+                <FormControlLabel value="0" control={<Radio />} label="Feminin" />
+              </RadioGroup>
                 <OutlinedInput type="number" InputProps={{}} margin="normal" placeholder="Height" value={height} onChange={e=>setHeight(e.target.value)} fullWidth required/><br/><br/>
-                <OutlinedInput type="file" margin="normal" onChange={handleFileChange} fullWidth required/><br/><br/>
+               <div className={classes.contentImage}>
+                 <OutlinedInput type="file" margin="normal" onChange={handleFileChange} fullWidth required/>
+                 {saveImage && (
+                   <img src={saveImage} className={classes.photoImahe} alt="save" />
+                 )}
+
+               </div>
+              <br/><br/>
+
                 <OutlinedInput type="text" InputProps={{}} margin="normal" placeholder="Reward" value={reward} onChange={e => setReward(e.target.value)} fullWidth required/><br/><br/>
                 <Select value={selectedOption} onChange={handleSelectOptionChange} fullWidth required input={
                     <OutlinedInput/>
@@ -164,7 +202,8 @@ export default function CreateAvis(props) {
                       }
                       onClick={()  => {
                     
-                        newAvis(
+                        updateAvis(
+                            avis.id,
                             givenname,
                             surname,
                             dateofbirth,

@@ -7,6 +7,8 @@ import Layout from "./Layout";
 // pages
 import Error from "../pages/error";
 import Login from "../pages/login";
+import Acceuil from "../pages/Acceuil"
+import Icard from "../pages/Icard";
 
 // context
 import { useUserState } from "../context/UserContext";
@@ -18,14 +20,16 @@ export default function App() {
   return (
     <HashRouter>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/app/dashboard" />} />
+        <Route exact path="/" render={() => <Redirect to="/accueil" />} />
         <Route
           exact
           path="/app"
           render={() => <Redirect to="/app/dashboard" />}
         />
         <PrivateRoute path="/app" component={Layout} />
-        <PublicRoute path="/login" component={Login} />
+        <Route path="/login" component={Login} />
+        <Route path="/accueil" component={Acceuil}/>
+        <Route path="/Icard" component={Icard}/>
         <Route component={Error} />
       </Switch>
     </HashRouter>
@@ -52,6 +56,7 @@ export default function App() {
           )
         }
       />
+      
     );
   }
 

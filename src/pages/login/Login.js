@@ -21,10 +21,8 @@ import logo from "./logo.svg";
 import { useUserDispatch, loginUser } from "../../context/UserContext";
 
 function Login(props) {
-  const [newLogin, setNewLogin] = useState({email: "", password: ""});
-  const [login, setLogin] = useState([]);
-  var [loginValue, setLoginValue] = useState("admin@gmail.com");
-  var [passwordValue, setPasswordValue] = useState("password");
+  var [loginValue, setLoginValue] = useState("");
+  var [passwordValue, setPasswordValue] = useState("");
   var classes = useStyles();
 
   // global
@@ -64,7 +62,7 @@ function Login(props) {
               </div>
               <Fade in={error}>
                 <Typography color="secondary" className={classes.errorMessage}>
-                  Something is wrong with your login or password :(
+                  Something is wrong with your login or password
                 </Typography>
               </Fade>
                 <TextField

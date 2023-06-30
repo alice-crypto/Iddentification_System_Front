@@ -32,101 +32,46 @@ const structure = [
   { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
   {
     id: 1,
-    label: "Typography",
-    link: "/app/typography",
-    icon: <TypographyIcon />,
-  },
-  { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
-  {
-    id: 3,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
-  },
-  {
-    id: 4,
     label: "Administration",
-    link: "/app/ui",
+    link: "/app/user",
     icon: <AdministrationIcon />,
     children: [
-      { label: "New User", link: "/app/ui/icons" },
-      { label: "All Users", link: "/app/ui/charts" },
+      { label: "New User", link: "/app/user/createuser" },
+      { label: "All Users", link: "/app/user/listuser" },
     ],
   },
   {
-    id: 5,
+    id: 2,
     label: "Cartes d'identités",
-    link: "/app/ui",
+    link: "/app/card",
     icon: <IdentityCartIcon />,
     children: [
-      { label: "Post New Card", link: "/app/ui/createCard" },
-      { label: "List All Card", link: "/app/ui/listCard" },
+      { label: "Post New Card", link: "/app/card/createCard" },
+      { label: "List All Card", link: "/app/card/listCard" },
     ],
   },
   {
-    id: 6,
+    id: 3,
     label: "Avis de recherches",
-    link: "/app/ui",
+    link: "/app/avis",
     icon: <AvisIcon />,
     children: [
-      { label: "Create Avis", link: "/app/ui/createAvis" },
-      { label: "List Avis", link: "/app/ui/listAvis" },
+      { label: "Create Avis", link: "/app/avis/createAvis" },
+      { label: "List Avis", link: "/app/avis/listAvis" },
     ],
   },
-  { id: 15, type: "divider" },
-  { id: 16, type: "title", label: "REPORTING" },
+  { id: 4, type: "divider" },
+  { id: 5, type: "title", label: "REPORTING" },
   {
-    id: 17,
-    label: "Region",
-    link: "/app/ui",
+    id: 6,
+    label: "Reporting",
+    link: "/app/reporting",
     icon: <UIElementsIcon />,
     children: [
-      { label: "Create", link: "/app/ui/icons" },
-      { label: "List", link: "/app/ui/charts" },
+      { label: "Create", link: "/app/reporting/CreateReporting" },
+      { label: "List", link: "/app/reporting/charts" },
     ],
-  },
-  {
-    id: 18,
-    label: "Department",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Create", link: "/app/ui/icons" },
-      { label: "List", link: "/app/ui/charts" },
-    ],
-  },
-  {
-    id: 19,
-    label: "Borought",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Create", link: "/app/ui/icons" },
-      { label: "List", link: "/app/ui/charts" },
-    ],
-  },
-  {
-    id: 20,
-    label: "Authority",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Create", link: "/app/ui/icons" },
-      { label: "List", link: "/app/ui/charts" },
-    ],
-  },
-  {
-    id: 20,
-    label: "Commissariat",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Create", link: "/app/ui/icons" },
-      { label: "List", link: "/app/ui/charts" },
-    ],
-  },
-
-
+  }
   
 ];
 
