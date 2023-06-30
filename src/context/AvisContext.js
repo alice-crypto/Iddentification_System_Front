@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 
 export { newCard, newAvis, updateAvis, newRegion, newfrontAvis, newBorought, newfrontCard, newDepartment, newAuthority, newCommissariat, createUser };
 
+
 function newCard(
   givenname,
   surname,
@@ -205,6 +206,90 @@ givenname,
     setIsLoading(false);
   }
 }
+function newRegion(regionname,setIsLoading,setError) {
+  setError(false);
+  setIsLoading(true);
+  const today = new Date();
+  if (!!regionname) {
+    const newInfo ={
+      name: regionname,
+    }
+    axios.post("http://localhost:8000/router/regions/", newInfo)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        setTimeout(() => {
+          setError(null)
+          setIsLoading(false)
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
+  } else {
+    setError(true);
+    setIsLoading(false);
+  }
+}
+function newDepartment(departmentname,region,setIsLoading,setError) {
+  setError(false);
+  setIsLoading(true);
+  const today = new Date();
+  if (!!departmentname) {
+    const newInfo ={
+      name: departmentname,
+      fk_region :region, 
+    }
+    axios.post("http://localhost:8000/router/departments/", newInfo)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        setTimeout(() => {
+          setError(null)
+          setIsLoading(false)
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
+  } else {
+    setError(true);
+    setIsLoading(false);
+  }
+}
+function newBorought(boroughtname,department,setIsLoading,setError) {
+  setError(false);
+  setIsLoading(true);
+  const today = new Date();
+  if (!!boroughtname) {
+    const newInfo ={
+      name: boroughtname,
+      fk_department: department
+    }
+    axios.post("http://localhost:8000/router/boroughs/", newInfo)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        setTimeout(() => {
+          setError(null)
+          setIsLoading(false)
+          history.push("/app/avis/listavis")
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
+  } else {
+    setError(true);
+    setIsLoading(false);
+  }
+}
 
 function updateAvis(
   id,
@@ -279,94 +364,6 @@ function updateAvis(
     setIsLoading(false);
   }
 }
-
-
-
-
-function newRegion(regionname,setIsLoading,setError) {
-  setError(false);
-  setIsLoading(true);
-  const today = new Date();
-  if (!!regionname) {
-    const newInfo ={
-      name: regionname,
-    }
-    axios.post("http://localhost:8000/router/regions/", newInfo)
-      .then(response => {
-        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
-        setTimeout(() => {
-          setError(null)
-          setIsLoading(false)
-        }, 2000);
-      })
-      .catch(error => {
-        // Gestion des erreurs
-        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
-        console.error(error);
-        setIsLoading(false)
-      });
-  } else {
-    setError(true);
-    setIsLoading(false);
-  }
-}
-function newDepartment(departmentname,region,setIsLoading,setError) {
-  setError(false);
-  setIsLoading(true);
-  const today = new Date();
-  if (!!departmentname) {
-    const newInfo ={
-      name: departmentname,
-      fk_region :region, 
-    }
-    axios.post("http://localhost:8000/router/departments/", newInfo)
-      .then(response => {
-        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
-        setTimeout(() => {
-          setError(null)
-          setIsLoading(false)
-        }, 2000);
-      })
-      .catch(error => {
-        // Gestion des erreurs
-        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
-        console.error(error);
-        setIsLoading(false)
-      });
-  } else {
-    setError(true);
-    setIsLoading(false);
-  }
-}
-function newBorought(boroughtname,department,setIsLoading,setError) {
-  setError(false);
-  setIsLoading(true);
-  const today = new Date();
-  if (!!boroughtname) {
-    const newInfo ={
-      name: boroughtname,
-      fk_department: department
-    }
-    axios.post("http://localhost:8000/router/boroughs/", newInfo)
-      .then(response => {
-        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
-        setTimeout(() => {
-          setError(null)
-          setIsLoading(false)
-        }, 2000);
-      })
-      .catch(error => {
-        // Gestion des erreurs
-        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
-        console.error(error);
-        setIsLoading(false)
-      });
-  } else {
-    setError(true);
-    setIsLoading(false);
-  }
-}
-
 
 
 function newfrontAvis(
