@@ -1,7 +1,8 @@
 import axios from "axios";
 import dayjs from "dayjs";
 
-export { newCard, newAvis, newRegion, newfrontAvis, newBorought, newfrontCard, newDepartment, newAuthority, newCommissariat, createUser };
+export { newCard, newAvis, updateAvis, newRegion, newfrontAvis, newBorought, newfrontCard, newDepartment, newAuthority, newCommissariat, createUser };
+
 
 function newCard(
   givenname,
@@ -275,6 +276,7 @@ function newBorought(boroughtname,department,setIsLoading,setError) {
         setTimeout(() => {
           setError(null)
           setIsLoading(false)
+          history.push("/app/avis/listavis")
         }, 2000);
       })
       .catch(error => {
@@ -289,6 +291,79 @@ function newBorought(boroughtname,department,setIsLoading,setError) {
   }
 }
 
+function updateAvis(
+  id,
+  givenname,
+  surname,
+  dateofbirth,
+  placeofbirth,
+  genre,
+  height,
+  photo,
+  reward,
+  selectedOption,
+  history,
+  setIsLoading,
+  setError) {
+  setError(false);
+  setIsLoading(true);
+  const today = new Date();
+  if (!!givenname && !!surname) {
+    console.log('photo ;', photo)
+    console.log('tyoe ;', typeof photo)
+    const newLogin ={
+      given_name: givenname,
+      surname: surname,
+      date_of_birth: dateofbirth,
+      gender: genre,
+      Height: height,
+      photos: photo,
+      PostedDate:dayjs().format('YYYY-MM-DD'),
+      reward: reward,
+      ClosingDate: dayjs().format('YYYY-MM-DD'),
+      isActive: true,
+      place_of_birth: placeofbirth,
+      fk_commissariat: selectedOption
+    }
+
+
+    const data = new FormData()
+    data.append('given_name', givenname)
+    data.append('surname',surname)
+    data.append('date_of_birth', dateofbirth)
+    data.append('gender', genre)
+    data.append('Height', height)
+    if (photo)
+      data.append('photos', photo)
+    data.append('PostedDate', dayjs().format('YYYY-MM-DD'))
+    data.append('reward', reward)
+    data.append('ClosingDate', dayjs().format('YYYY-MM-DD'))
+    data.append('isActive', true)
+    data.append('place_of_birth', placeofbirth)
+    data.append('fk_commissariat', selectedOption)
+    console.log('data :', data)
+
+
+    axios.patch(`http://localhost:8000/router/wanted-poster/${id}/`, data)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        setTimeout(() => {
+          setError(null)
+          setIsLoading(false)
+          history.push("/app/avis/listavis")
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
+  } else {
+    setError(true);
+    setIsLoading(false);
+  }
+}
 
 
 function newfrontAvis(

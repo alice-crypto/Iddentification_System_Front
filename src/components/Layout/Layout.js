@@ -42,6 +42,7 @@ import CreateUser from "../../pages/createUser";
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
+import UpdateAvis from "../../pages/updateAvis";
 
 function Layout(props) {
   var classes = useStyles();
@@ -76,6 +77,7 @@ function Layout(props) {
               <Route path="/app/ui/charts" component={Charts} />
               <Route path="/app/reporting/CreateReporting" component={CreateReporting} />
               <Route path="/app/avis/createavis" component={CreateAvis} />
+              <Route path="/app/avis/updateavis" component={UpdateAvis} />
               <Route path="/app/avis/listavis" component={ListAvis} />
               <Route path="/app/card/listcard" component={ListCard} />
               <Route path="/app/card/createcard" component={CreateCard} />

@@ -11,7 +11,9 @@ import {
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
 import useStyles from "../../styles";
-import { See } from "./ListAvisContext";
+
+import { See, Update } from "./ListAvisContext";
+
 
 const states = {
   sent: "success",
@@ -78,8 +80,9 @@ export default function TableComponent({ data, deleteAvis, props}) {
             <TableCell>{reward}</TableCell>
             <TableCell>
               <Button className={classes.success} onClick={() => See(id, props.history)}><Icons.RemoveRedEyeSharp/></Button>{" "}
-              <Button className={classes.warning}><Icons.Update/></Button>{" "} 
-              <Button id="delete-button" className={classes.secondary} 
+              <Button className={classes.warning} onClick={() => Update(id, props.history)}><Icons.Update/></Button>{" "}
+              <Button className={classes.warning}><Icons.Update/></Button>{" "}
+              <Button id="delete-button" className={classes.secondary}
                 onClick={() =>handleDelete(id)}><Icons.Delete/>
               </Button>{" "}
               <Button className={classes.success}><Icons.Check/></Button>{" "} 
