@@ -11,7 +11,8 @@ import {
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
 import useStyles from "../../styles";
-import { See } from "./ListUserContext";
+import { See, UpdateUser } from "./ListUserContext";
+import { UpdateCard } from "../../../listCard/component/Table/ListCardContext";
 
 const states = {
   sent: "success",
@@ -76,7 +77,7 @@ export default function TableComponent({ data, deleteUser, props}) {
             <TableCell>{phone}</TableCell>
             <TableCell>
               <Button className={classes.success} onClick={() => See(id, props.history)}><Icons.RemoveRedEyeSharp/></Button>{" "}
-              <Button className={classes.warning}><Icons.Update/></Button>{" "} 
+              <Button className={classes.warning} onClick={() => UpdateUser(id, props.history)}><Icons.Update/></Button>{" "}
               <Button id="delete-button" className={classes.secondary} 
                 onClick={() =>handleDelete(id)}><Icons.Delete/>
               </Button>

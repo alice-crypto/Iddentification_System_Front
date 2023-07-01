@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export {deleteUser, See};
+export {deleteUser, See, UpdateUser};
 
 function deleteUser(id) {
   if (!!id) {
@@ -16,4 +16,8 @@ function deleteUser(id) {
 }
 function See(id, history) {
     history.push("/app/ui/seeavis?id="+id);
+}
+
+function UpdateUser(id, history) {
+  history.push("/app/user/updateuser?id="+id);
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import dayjs from "dayjs";
 
-export { newCard, newAvis, updateAvis, newRegion, newfrontAvis, newBorought, newfrontCard, newDepartment, newAuthority, newCommissariat, createUser };
+export { newCard, updateCard, updateUser, newAvis, updateAvis, newRegion, newfrontAvis, newBorought, newfrontCard, newDepartment, newAuthority, newCommissariat, createUser };
 
 
 function newCard(
@@ -69,6 +69,75 @@ function newCard(
       setIsLoading(false);
     }
   }
+
+
+function updateCard(
+  id,
+  givenname,
+  surname,
+  dateofbirth,
+  placeofbirth,
+  genre,
+  height,
+  photo,
+  reward,
+  identity_number,
+  deliverance_date,
+  expired_date,
+  phone,
+  selectedOption,
+  history,
+  setIsLoading,
+  setError) {
+  setError(false);
+  setIsLoading(true);
+  const today = new Date();
+  if (!!givenname && !!surname) {
+
+
+    const data = new FormData()
+    data.append('given_name', givenname)
+    data.append('surname',surname)
+    data.append('date_of_birth', dateofbirth)
+    data.append('gender', genre)
+    data.append('Height', height)
+    if (photo)
+      data.append('photos', photo)
+    data.append('PostedDate', dayjs().format('YYYY-MM-DD'))
+    data.append('reward', reward)
+    data.append('ClosingDate', dayjs().format('YYYY-MM-DD'))
+    data.append('isActive', true)
+    data.append('place_of_birth', placeofbirth)
+    data.append('fk_authority', selectedOption)
+    data.append('expired_date', expired_date)
+    data.append('identity_number', identity_number)
+    data.append('deliverance_date',deliverance_date)
+    data.append('posted_phone_number', phone)
+
+
+    axios.patch(`http://localhost:8000/router/identity-cards/${id}/`, data)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        setTimeout(() => {
+          setError(null)
+          setIsLoading(false)
+          history.push("/app/card/listcard")
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
+  } else {
+    setError(true);
+    setIsLoading(false);
+  }
+}
+
+
+
   function newfrontCard(
     givenname,
     surname,
@@ -276,7 +345,6 @@ function newBorought(boroughtname,department,setIsLoading,setError) {
         setTimeout(() => {
           setError(null)
           setIsLoading(false)
-          history.push("/app/avis/listavis")
         }, 2000);
       })
       .catch(error => {
@@ -494,6 +562,7 @@ function newCommissariat(commissariatname,setIsLoading,setError) {
       setIsLoading(false);
     }
   }
+
   function createUser(
     username,
     password,
@@ -539,5 +608,50 @@ function newCommissariat(commissariatname,setIsLoading,setError) {
         setIsLoading(false);
       }
     }
+
+function updateUser(
+  id,
+  username,
+  firstname,
+  lastname,
+  email,
+  phone,
+  history,
+  setIsLoading,
+  setError) {
+  setError(false);
+  setIsLoading(true);
+  const today = new Date();
+  if (!!username && !!firstname && !!lastname && !!email && !!phone) {
+
+    const data = new FormData()
+    data.append('username', username)
+    data.append('first_name', firstname)
+    data.append('last_name', lastname)
+    data.append('email', email)
+    data.append('phone', phone)
+    console.log('data :', data)
+
+
+    axios.patch(`http://localhost:8000/router/Users/register/${id}/`, data)
+      .then(response => {
+        // Connexion réussie, redirigez vers le tableau de bord (dashboard)
+        setTimeout(() => {
+          setError(null)
+          setIsLoading(false)
+          history.push("/app/user/listuser")
+        }, 2000);
+      })
+      .catch(error => {
+        // Gestion des erreurs
+        setError('Échec de la connexion. Veuillez vérifier vos identifiants.');
+        console.error(error);
+        setIsLoading(false)
+      });
+  } else {
+    setError(true);
+    setIsLoading(false);
+  }
+}
   
 

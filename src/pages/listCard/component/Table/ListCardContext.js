@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export {deleteCard, See};
+export {deleteCard, See, UpdateCard};
 
 function deleteCard(id) {
   if (!!id) {
@@ -15,4 +15,8 @@ function deleteCard(id) {
   }
 }
 function See(id, history) {
+}
+
+function UpdateCard(id, history) {
+  history.push("/app/avis/updateCard?id="+id);
 }
