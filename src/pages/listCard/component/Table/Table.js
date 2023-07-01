@@ -10,8 +10,9 @@ import {
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
 import useStyles from "../../styles";
-import {See} from "./ListCardContext";
+import { See, UpdateCard } from "./ListCardContext";
 import axios from "axios";
+import { Update } from "../../../listAvis/component/Table/ListAvisContext";
 
 
 const states = {
@@ -87,7 +88,7 @@ export default function TableComponent({ data , deleteCard, props }) {
             <TableCell>{identity_number}</TableCell>
             <TableCell>
               <Button className={classes.success} onClick={() => See(id, props.history)}><Icons.RemoveRedEyeSharp/></Button>{" "}
-              <Button className={classes.warning}><Icons.Update/></Button>{" "} 
+              <Button className={classes.warning} onClick={() => UpdateCard(id, props.history)}><Icons.Update/></Button>{" "}
               <Button className={classes.secondary} 
                 onClick={() =>handleDelete(id)}><Icons.Delete/></Button>{" "}
               <Button className={classes.success}><Icons.Check/></Button>{" "} 

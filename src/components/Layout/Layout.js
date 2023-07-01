@@ -43,6 +43,8 @@ import CreateUser from "../../pages/createUser";
 // context
 import { useLayoutState } from "../../context/LayoutContext";
 import UpdateAvis from "../../pages/updateAvis";
+import UpdateCard from "../../pages/updateCard/UpdateCard";
+import UpdateUser from "../../pages/updateUser/UpdateUser";
 
 function Layout(props) {
   var classes = useStyles();
@@ -78,12 +80,14 @@ function Layout(props) {
               <Route path="/app/reporting/CreateReporting" component={CreateReporting} />
               <Route path="/app/avis/createavis" component={CreateAvis} />
               <Route path="/app/avis/updateavis" component={UpdateAvis} />
+              <Route path="/app/avis/updateCard" component={UpdateCard} />
               <Route path="/app/avis/listavis" component={ListAvis} />
               <Route path="/app/card/listcard" component={ListCard} />
               <Route path="/app/card/createcard" component={CreateCard} />
               <Route path="/app/avis/seeavis" component={SeeAvis}/>
               <Route path="/app/user/listuser" component={ListUser}/>
               <Route path="/app/user/createuser" component={CreateUser}/>
+              <Route path="/app/user/updateuser" component={UpdateUser}/>
 
 
             </Switch>
